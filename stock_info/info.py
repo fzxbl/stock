@@ -9,13 +9,17 @@ import pandas as pd
 from stock_info.conf import token
 
 class Client:
-    api = ts.pro_api(token)
+    _api = ts.pro_api(token)
 
-    def basic(self) -> pd.DataFrame:
-        return Client.api.stock_basic()
+    def stock_list(self) -> pd.DataFrame:
+        try:
+            stocks = Client._api.stock_basic()
+        except Exception as e:
+            return 
+        return stocks
 
     def daily(self,ts_code:str, trade_date:str, start_date:int, end_date:int) -> pd.DataFrame:
-        return Client.api.daily(**{
+        return Client._api.daily(**{
             "ts_code": ts_code,
             "trade_date":trade_date,
             "start_date": start_date,
@@ -36,8 +40,11 @@ class Client:
             "amount"
         ])
 
+    def dump2db(self, df:pd.DataFrame, table:str):
+        df.to_sql
 
-cli = Client(token)
-df = cli.daily()
+cli = Client()
+df = cli.daily('000157.SZ','',20230622,20230623)
 
-print(df.count())
+print(df.empty)
+print(df)
