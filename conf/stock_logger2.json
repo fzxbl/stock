@@ -1,0 +1,33 @@
+{
+    // 配置项含义参考 https://betterstack.com/community/guides/logging/loguru/
+    // https://loguru.readthedocs.io/en/stable/api/logger.html
+    "handlers": [
+        {
+            "sink": "{LOG_DIR}/logtest", //可自定义文件名字，或使用console.{time:YYYYMMDDHH}
+            "level": "INFO", //可选TRACE | DEBUG | INFO | SUCCESS | WARNING | ERROR | CRITICAL
+            "format": "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <level>{level}</level> | <cyan>{file.path}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+            "colorize": false, //是否开启颜色展示，仅sink为console时有效
+            "serialize": true,//如果为true，则format格式不生效，参考log模块patch函数
+            "backtrace": true, //如果发生exception，是否向上追踪调用
+            "diagnose": true, //发生exception时，是否记录变量值
+            "enqueue": true, // 多线程操作同一文件时线程安全
+            "catch": true, //记录日志失败时，是否catch错误并向stderr输出，避免程序崩溃
+            "rotation": "1 hour",
+            "retention": "7 days", 
+            // "compression": "gz",
+            "delay": true, //真正写日志时才创建文件
+            "encoding": "utf8"
+        },
+        {
+            "sink": "console", 
+            "level": "TRACE", 
+            "format": "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <level>{level}</level> | <cyan>{file.path}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+            "colorize": true,
+            "serialize": false, 
+            "backtrace": true,
+            "diagnose": true,
+            "enqueue": true,
+            "catch": true
+        },
+    ]
+}

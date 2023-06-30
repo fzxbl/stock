@@ -1,0 +1,8 @@
+Host = "localhost"
+Port = 3306
+User = "username"
+Password = "password"
+DBName = "database"
+TimeZone = "Asia/Shanghai"
+Charset = "utf8"
+ParseTime = true
